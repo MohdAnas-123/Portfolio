@@ -1,0 +1,417 @@
+/* ═══════════════════════════════════════════════════════════════════
+   AskMe Chat Widget — Premium Glassmorphic Floating Chat
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Floating Action Button ─────────────────────────────────────── */
+.askme-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #7c3aed, #6366f1, #3b82f6);
+  box-shadow:
+    0 4px 24px rgba(124, 58, 237, 0.4),
+    0 0 0 0 rgba(124, 58, 237, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: askme-pulse 2.5s ease-in-out infinite;
+}
+
+.askme-fab:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 6px 32px rgba(124, 58, 237, 0.55),
+    0 0 0 6px rgba(124, 58, 237, 0.12);
+}
+
+.askme-fab svg {
+  width: 26px;
+  height: 26px;
+  color: white;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes askme-pulse {
+  0%, 100% {
+    box-shadow:
+      0 4px 24px rgba(124, 58, 237, 0.4),
+      0 0 0 0 rgba(124, 58, 237, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 4px 24px rgba(124, 58, 237, 0.4),
+      0 0 0 10px rgba(124, 58, 237, 0);
+  }
+}
+
+/* ── Chat Panel ─────────────────────────────────────────────────── */
+.askme-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 28px;
+  z-index: 9998;
+  width: 400px;
+  max-height: 560px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 0 40px rgba(124, 58, 237, 0.06);
+}
+
+:where(.dark) .askme-panel {
+  background: rgba(15, 15, 25, 0.88);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 0 50px rgba(124, 58, 237, 0.08);
+}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+.askme-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  flex-shrink: 0;
+}
+
+.askme-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.askme-header-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.askme-header-info h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.01em;
+}
+
+.askme-header-info p {
+  margin: 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.askme-close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  cursor: pointer;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.askme-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.askme-close-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Messages Area ──────────────────────────────────────────────── */
+.askme-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 200px;
+  max-height: 320px;
+}
+
+.askme-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.askme-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.askme-messages::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.3);
+  border-radius: 2px;
+}
+
+/* ── Message Bubbles ────────────────────────────────────────────── */
+.askme-msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.askme-msg-user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.askme-msg-bot {
+  align-self: flex-start;
+  background: rgba(124, 58, 237, 0.08);
+  color: #1f2937;
+  border-bottom-left-radius: 4px;
+}
+
+:where(.dark) .askme-msg-bot {
+  background: rgba(124, 58, 237, 0.12);
+  color: #e5e7eb;
+}
+
+/* ── Typing Indicator ───────────────────────────────────────────── */
+.askme-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  align-self: flex-start;
+  background: rgba(124, 58, 237, 0.08);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+}
+
+:where(.dark) .askme-typing {
+  background: rgba(124, 58, 237, 0.12);
+}
+
+.askme-typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #7c3aed;
+  opacity: 0.5;
+  animation: askme-bounce 1.4s ease-in-out infinite;
+}
+
+.askme-typing-dot:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.askme-typing-dot:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes askme-bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+/* ── Suggestion Chips ───────────────────────────────────────────── */
+.askme-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 16px 12px;
+  flex-shrink: 0;
+}
+
+.askme-chip {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  background: rgba(124, 58, 237, 0.05);
+  color: #6d28d9;
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.askme-chip:hover {
+  background: rgba(124, 58, 237, 0.12);
+  border-color: rgba(124, 58, 237, 0.35);
+  transform: translateY(-1px);
+}
+
+:where(.dark) .askme-chip {
+  color: #a78bfa;
+  border-color: rgba(124, 58, 237, 0.25);
+  background: rgba(124, 58, 237, 0.08);
+}
+
+:where(.dark) .askme-chip:hover {
+  background: rgba(124, 58, 237, 0.18);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+/* ── Input Area ─────────────────────────────────────────────────── */
+.askme-input-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(124, 58, 237, 0.1);
+  flex-shrink: 0;
+}
+
+:where(.dark) .askme-input-area {
+  border-top-color: rgba(124, 58, 237, 0.15);
+}
+
+.askme-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  background: rgba(124, 58, 237, 0.03);
+  color: #1f2937;
+  font-size: 13.5px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.askme-input::placeholder {
+  color: #9ca3af;
+}
+
+.askme-input:focus {
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
+}
+
+:where(.dark) .askme-input {
+  background: rgba(124, 58, 237, 0.06);
+  border-color: rgba(124, 58, 237, 0.2);
+  color: #e5e7eb;
+}
+
+:where(.dark) .askme-input::placeholder {
+  color: #6b7280;
+}
+
+:where(.dark) .askme-input:focus {
+  border-color: rgba(124, 58, 237, 0.45);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.askme-send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  color: white;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.askme-send-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+}
+
+.askme-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.askme-send-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Welcome Message ────────────────────────────────────────────── */
+.askme-welcome {
+  text-align: center;
+  padding: 20px 16px 8px;
+}
+
+.askme-welcome-emoji {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.askme-welcome h4 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+:where(.dark) .askme-welcome h4 {
+  color: #e5e7eb;
+}
+
+.askme-welcome p {
+  margin: 0;
+  font-size: 12.5px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+:where(.dark) .askme-welcome p {
+  color: #9ca3af;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .askme-panel {
+    width: calc(100vw - 24px);
+    right: 12px;
+    bottom: 88px;
+    max-height: 70vh;
+  }
+
+  .askme-fab {
+    bottom: 20px;
+    right: 20px;
+    width: 54px;
+    height: 54px;
+  }
+}
