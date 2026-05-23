@@ -4,6 +4,80 @@ import { useRef } from "react";
 import SectionHeader from "./SectionHeader";
 import { skillCategories } from "@/data/portfolio";
 
+// Devicon CDN slugs — maps skill display name to its devicon slug
+const DEVICON_MAP = {
+  Python: "python",
+  Java: "java",
+  SQL: "azuresqldatabase",
+  JavaScript: "javascript",
+  "HTML/CSS": "html5",
+  LangChain: null,
+  LangGraph: null,
+  "Hugging Face": null,
+  "scikit-learn": "scikitlearn",
+  Pandas: "pandas",
+  NumPy: "numpy",
+  BERT: null,
+  GPT: null,
+  RAG: null,
+  FastAPI: "fastapi",
+  Flask: "flask",
+  Streamlit: "streamlit",
+  "Next.js": "nextjs",
+  Docker: "docker",
+  Git: "git",
+  "REST APIs": null,
+  Qdrant: null,
+  PostgreSQL: "postgresql",
+  Pinecone: null,
+  SQLite: "sqlite",
+  "Vector Databases": null,
+  Vercel: "vercel",
+  "GitHub Actions": "githubactions",
+};
+
+// Fallback emoji icons for skills without devicons
+const FALLBACK_ICONS = {
+  LangChain: "🔗",
+  LangGraph: "🕸️",
+  "Hugging Face": "🤗",
+  BERT: "🧠",
+  GPT: "🤖",
+  RAG: "📚",
+  "REST APIs": "🔌",
+  Qdrant: "🔍",
+  Pinecone: "🌲",
+  "Vector Databases": "📊",
+};
+
+function SkillIcon({ skill }) {
+  const slug = DEVICON_MAP[skill];
+
+  if (slug) {
+    return (
+      <img
+        src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${slug}/${slug}-original.svg`}
+        alt={skill}
+        width={16}
+        height={16}
+        className="flex-shrink-0"
+        loading="lazy"
+        onError={(e) => {
+          // Hide broken icons gracefully
+          e.target.style.display = "none";
+        }}
+      />
+    );
+  }
+
+  const fallback = FALLBACK_ICONS[skill];
+  if (fallback) {
+    return <span className="text-xs flex-shrink-0">{fallback}</span>;
+  }
+
+  return null;
+}
+
 export default function Skills() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -39,8 +113,9 @@ export default function Skills() {
                 {cat.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 text-gray-600 dark:text-gray-400 hover:border-violet-500/40 hover:text-violet-400 hover:bg-violet-500/5 transition-all cursor-default"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 text-gray-600 dark:text-gray-400 hover:border-violet-500/40 hover:text-violet-400 hover:bg-violet-500/5 transition-all cursor-default"
                   >
+                    <SkillIcon skill={skill} />
                     {skill}
                   </span>
                 ))}

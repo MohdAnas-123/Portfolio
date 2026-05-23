@@ -1,7 +1,7 @@
 "use client";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, Send, MapPin } from "lucide-react";
+import { Mail, Send, MapPin, Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./icons";
 import SectionHeader from "./SectionHeader";
 import { personalInfo, contactFormAction } from "@/data/portfolio";
@@ -9,22 +9,31 @@ import { personalInfo, contactFormAction } from "@/data/portfolio";
 export default function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
+    setStatus("sending");
+
     try {
-      await fetch(contactFormAction, {
+      const res = await fetch(contactFormAction, {
         method: "POST",
         body: new FormData(form),
         headers: { Accept: "application/json" },
       });
-      setSubmitted(true);
+
+      if (!res.ok) throw new Error("Failed to send");
+
+      setStatus("success");
       form.reset();
+
+      // Reset to idle after 5 seconds so user can send again
+      setTimeout(() => setStatus("idle"), 5000);
     } catch {
-      // fallback: mailto
-      window.location.href = `mailto:${personalInfo.email}`;
+      setStatus("error");
+      // Reset to idle after 4 seconds
+      setTimeout(() => setStatus("idle"), 4000);
     }
   };
 
@@ -34,6 +43,8 @@ export default function Contact() {
     { icon: <GithubIcon size={18} />, label: "GitHub", href: personalInfo.github },
     { icon: <MapPin size={18} />, label: personalInfo.location, href: null },
   ];
+
+  const isSending = status === "sending";
 
   return (
     <section
@@ -98,63 +109,97 @@ export default function Contact() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {submitted ? (
-              <div className="h-full flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-4xl mb-4">✉️</div>
-                  <h3 className="text-lg font-bold mb-2">Message Sent!</h3>
-                  <p className="text-sm text-gray-500">
-                    Thanks for reaching out. I&apos;ll get back to you soon.
-                  </p>
-                </div>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 relative">
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  disabled={isSending}
+                  placeholder="Your name"
+                  className="px-4 py-3 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a2e] text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="Your name"
-                    className="px-4 py-3 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a2e] text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all placeholder:text-gray-400"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="your@email.com"
-                    className="px-4 py-3 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a2e] text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all placeholder:text-gray-400"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Message
-                  </label>
-                  <textarea
-                    name="message"
-                    required
-                    rows={5}
-                    placeholder="Tell me about the opportunity..."
-                    className="px-4 py-3 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a2e] text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all resize-y placeholder:text-gray-400"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold bg-violet-600 text-white hover:bg-violet-500 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/25 cursor-pointer"
-                >
-                  <Send size={15} />
-                  Send Message
-                </button>
-              </form>
-            )}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  disabled={isSending}
+                  placeholder="your@email.com"
+                  className="px-4 py-3 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a2e] text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  required
+                  rows={5}
+                  disabled={isSending}
+                  placeholder="Tell me about the opportunity..."
+                  className="px-4 py-3 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a2e] text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all resize-y placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isSending}
+                className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold bg-violet-600 text-white hover:bg-violet-500 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/25 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+              >
+                {isSending ? (
+                  <>
+                    <Loader2 size={15} className="animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send size={15} />
+                    Send Message
+                  </>
+                )}
+              </button>
+
+              {/* Feedback Toast */}
+              <AnimatePresence>
+                {status === "success" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    className="flex items-center gap-2 px-4 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm font-medium"
+                  >
+                    <CheckCircle2 size={16} />
+                    Message sent! I&apos;ll get back to you soon.
+                  </motion.div>
+                )}
+                {status === "error" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    className="flex items-center gap-2 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-sm font-medium"
+                  >
+                    <XCircle size={16} />
+                    Failed to send. Try{" "}
+                    <a
+                      href={`mailto:${personalInfo.email}`}
+                      className="underline hover:text-red-500"
+                    >
+                      emailing directly
+                    </a>
+                    .
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </form>
           </motion.div>
         </div>
       </div>

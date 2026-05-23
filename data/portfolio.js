@@ -178,14 +178,14 @@ export const experience = [
     ],
   },
   {
-    date: "2023 — 2024",
-    role: "Backend Developer",
-    company: "CritiqueConnect Platform",
+    date: "May 2025 — Aug 2025",
+    role: "Frontend Web Development Intern",
+    company: "Gymbrawns Enterprises",
     details: [
-      "Developed a production-grade feedback enhancement backend using FastAPI with BERT and GPT integration",
-      "Built a 4-stage AI pipeline: feedback collection, BERT sentiment analysis, GPT enhancement, and synthesis",
-      "Containerized the application with Docker and set up CI/CD workflows with GitHub Actions",
-      "Designed RESTful APIs handling CRUD operations for creative works and peer critiques",
+      "Integrated RESTful APIs between frontend components and backend services, ensuring reliable asynchronous data flow and improved application responsiveness",
+      "Refactored reusable UI components and optimized frontend architecture for better scalability, maintainability, and modular development",
+      "Collaborated on improving overall user experience by enhancing frontend performance, responsiveness, and component-level consistency",
+      "Applied software engineering best practices including modularity, separation of concerns, and clean code principles while working in a remote development environment",
     ],
   },
 ];
@@ -194,11 +194,11 @@ export const education = [
   {
     icon: "🎓",
     degree: "B.Tech in Computer Science",
-    school: "University (Final Year)",
+    school: "KIET GROUP OF INSTITUTIONS, Ghaziabad (Final Year)",
     year: "2022 — 2026",
     details:
       "Specializing in Artificial Intelligence and Machine Learning. Building production-grade AI systems and multi-agent architectures as personal projects alongside academic curriculum.",
   },
 ];
 
-export const contactFormAction = "https://formspree.io/f/YOUR_FORM_ID"; // Replace with your Formspree endpoint
+export const contactFormAction = "https://formspree.io/f/mqejlelp"; 

@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Sparkles } from "lucide-react";
+import { X, Send, Sparkles } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import "./AskMe.css";
 
 const SUGGESTIONS = [
@@ -11,6 +12,84 @@ const SUGGESTIONS = [
   "Tell me about his AI agents",
   "Is he available for work?",
 ];
+
+// Renders markdown with clean styling that fits inside the bot bubble
+function BotMessage({ text, isStreaming }) {
+  return (
+    <div className="askme-markdown">
+      <ReactMarkdown
+        components={{
+          h1: ({ children }) => (
+            <p className="askme-md-heading">{children}</p>
+          ),
+          h2: ({ children }) => (
+            <p className="askme-md-heading">{children}</p>
+          ),
+          h3: ({ children }) => (
+            <p className="askme-md-subheading">{children}</p>
+          ),
+          p: ({ children }) => (
+            <p className="askme-md-p">{children}</p>
+          ),
+          strong: ({ children }) => (
+            <strong className="askme-md-strong">{children}</strong>
+          ),
+          em: ({ children }) => (
+            <em className="askme-md-em">{children}</em>
+          ),
+          ul: ({ children }) => (
+            <ul className="askme-md-ul">{children}</ul>
+          ),
+          ol: ({ children }) => (
+            <ol className="askme-md-ol">{children}</ol>
+          ),
+          li: ({ children }) => (
+            <li className="askme-md-li">
+              <span className="askme-md-bullet" />
+              <span>{children}</span>
+            </li>
+          ),
+          code: ({ children, className }) => {
+            const isBlock = className?.includes("language-");
+            return isBlock ? (
+              <code className="askme-md-code-block">{children}</code>
+            ) : (
+              <code className="askme-md-code-inline">{children}</code>
+            );
+          },
+          blockquote: ({ children }) => (
+            <blockquote className="askme-md-blockquote">{children}</blockquote>
+          ),
+          a: ({ href, children }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="askme-md-link"
+            >
+              {children}
+            </a>
+          ),
+          hr: () => <hr className="askme-md-hr" />,
+        }}
+      >
+        {text}
+      </ReactMarkdown>
+      {isStreaming && <span className="askme-cursor" />}
+    </div>
+  );
+}
+
+// Typing indicator dots
+function TypingIndicator() {
+  return (
+    <div className="askme-typing">
+      <div className="askme-typing-dot" />
+      <div className="askme-typing-dot" />
+      <div className="askme-typing-dot" />
+    </div>
+  );
+}
 
 export default function AskMe() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,20 +116,22 @@ export default function AskMe() {
       const question = text.trim();
       if (!question || isStreaming) return;
 
-      // Add user message
-      setMessages((prev) => [...prev, { role: "user", text: question }]);
+      // Snapshot current history before adding new messages
+      const history = messages.map((m) => ({ role: m.role, text: m.text }));
+
+      setMessages((prev) => [
+        ...prev,
+        { role: "user", text: question },
+        { role: "bot", text: "", done: false },
+      ]);
       setInput("");
       setIsStreaming(true);
-
-      // Add empty bot message that we'll stream into
-      const botMsgIndex = messages.length + 1;
-      setMessages((prev) => [...prev, { role: "bot", text: "" }]);
 
       try {
         const res = await fetch("/api/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question, history: messages }),
+          body: JSON.stringify({ question, history }),
         });
 
         if (!res.ok) {
@@ -65,41 +146,49 @@ export default function AskMe() {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-
           accumulated += decoder.decode(value, { stream: true });
-          const currentText = accumulated;
-
+          const current = accumulated;
           setMessages((prev) => {
             const updated = [...prev];
-            updated[botMsgIndex] = { role: "bot", text: currentText };
+            updated[updated.length - 1] = {
+              role: "bot",
+              text: current,
+              done: false,
+            };
             return updated;
           });
         }
+
+        // Mark done so cursor disappears
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            ...updated[updated.length - 1],
+            done: true,
+          };
+          return updated;
+        });
       } catch (err) {
         setMessages((prev) => {
           const updated = [...prev];
-          updated[botMsgIndex] = {
+          updated[updated.length - 1] = {
             role: "bot",
-            text:
-              err.message ||
-              "Sorry, something went wrong. Please try again later.",
+            text: err.message || "Sorry, something went wrong. Please try again.",
+            done: true,
           };
           return updated;
         });
       } finally {
         setIsStreaming(false);
+        inputRef.current?.focus();
       }
     },
-    [isStreaming, messages.length]
+    [isStreaming, messages]
   );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     sendMessage(input);
-  };
-
-  const handleChipClick = (suggestion) => {
-    sendMessage(suggestion);
   };
 
   const handleKeyDown = (e) => {
@@ -124,7 +213,7 @@ export default function AskMe() {
             aria-label="Ask me anything"
             id="askme-fab"
           >
-            <Sparkles />
+            <Sparkles size={20} />
           </motion.button>
         )}
       </AnimatePresence>
@@ -145,7 +234,7 @@ export default function AskMe() {
                 <div className="askme-header-avatar">🤖</div>
                 <div className="askme-header-info">
                   <h3>Ask About Anas</h3>
-                  <p>AI-powered • Instant answers</p>
+                  <p>AI-powered · Instant answers</p>
                 </div>
               </div>
               <button
@@ -154,12 +243,13 @@ export default function AskMe() {
                 aria-label="Close chat"
                 id="askme-close-btn"
               >
-                <X />
+                <X size={16} />
               </button>
             </div>
 
             {/* Messages */}
             <div className="askme-messages" id="askme-messages">
+              {/* Welcome state */}
               {messages.length === 0 && (
                 <div className="askme-welcome">
                   <div className="askme-welcome-emoji">✨</div>
@@ -171,42 +261,46 @@ export default function AskMe() {
                 </div>
               )}
 
-              {messages.map((msg, i) => (
-                <motion.div
-                  key={i}
-                  className={`askme-msg ${
-                    msg.role === "user" ? "askme-msg-user" : "askme-msg-bot"
-                  }`}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {msg.text}
-                </motion.div>
-              ))}
+              {messages.map((msg, i) => {
+                const isLastBot =
+                  msg.role === "bot" && i === messages.length - 1;
+                const showTyping =
+                  isLastBot && isStreaming && msg.text === "";
+                const showCursor =
+                  isLastBot && isStreaming && msg.text !== "";
 
-              {/* Typing indicator — show only when streaming and last bot message is empty */}
-              {isStreaming &&
-                messages.length > 0 &&
-                messages[messages.length - 1].text === "" && (
-                  <div className="askme-typing">
-                    <div className="askme-typing-dot" />
-                    <div className="askme-typing-dot" />
-                    <div className="askme-typing-dot" />
-                  </div>
-                )}
+                return (
+                  <motion.div
+                    key={i}
+                    className={`askme-msg ${msg.role === "user" ? "askme-msg-user" : "askme-msg-bot"
+                      }`}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {showTyping ? (
+                      <TypingIndicator />
+                    ) : msg.role === "user" ? (
+                      <span className="askme-user-text">{msg.text}</span>
+                    ) : (
+                      <BotMessage text={msg.text} isStreaming={showCursor} />
+                    )}
+                  </motion.div>
+                );
+              })}
 
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Suggestion Chips — only show when no messages yet */}
+            {/* Suggestion Chips — only when no messages */}
             {messages.length === 0 && (
               <div className="askme-suggestions">
                 {SUGGESTIONS.map((s) => (
                   <button
                     key={s}
                     className="askme-chip"
-                    onClick={() => handleChipClick(s)}
+                    onClick={() => sendMessage(s)}
+                    disabled={isStreaming}
                     id={`askme-chip-${s.slice(0, 10).replace(/\s/g, "-").toLowerCase()}`}
                   >
                     {s}
@@ -236,7 +330,28 @@ export default function AskMe() {
                 aria-label="Send message"
                 id="askme-send-btn"
               >
-                <Send />
+                {isStreaming ? (
+                  <svg
+                    className="askme-spinner"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      cx="12" cy="12" r="10"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      className="askme-spinner-track"
+                    />
+                    <path
+                      d="M12 2a10 10 0 0 1 10 10"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                ) : (
+                  <Send size={15} />
+                )}
               </button>
             </form>
           </motion.div>

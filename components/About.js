@@ -29,14 +29,14 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="bg-white dark:bg-[#1a1a2e] rounded-2xl border border-gray-100 dark:border-white/8 p-5 relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 via-purple-400 to-blue-400" />
+            <div className="bg-white dark:bg-[#1a1a2e] rounded-full border border-gray-100 dark:border-white/8 p-3 sm:p-4 relative mx-auto w-64 h-64 sm:w-80 sm:h-80 shadow-2xl shadow-violet-500/5">
+              <div className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-tr from-violet-500/30 to-blue-400/30 [mask-image:linear-gradient(white,white)] [-webkit-mask-image:-webkit-linear-gradient(white,white)] [-webkit-mask-composite:destination-out] [mask-composite:exclude]" />
               <Image
                 src={personalInfo.avatarUrl}
                 alt={personalInfo.name}
                 width={400}
-                height={500}
-                className="rounded-xl w-full aspect-[4/5] object-cover"
+                height={400}
+                className="rounded-full w-full h-full object-cover"
               />
             </div>
           </motion.div>
