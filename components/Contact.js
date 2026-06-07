@@ -55,7 +55,6 @@ export default function Contact() {
         <SectionHeader
           label="Contact"
           title="Get In Touch"
-          subtitle="Have a role or project in mind? Let's talk."
         />
 
         <div
@@ -69,9 +68,13 @@ export default function Contact() {
             transition={{ duration: 0.5 }}
           >
             <p className="text-gray-500 dark:text-gray-400 mb-6 text-[15px] leading-relaxed">
-              I&apos;m currently looking for <strong className="text-gray-900 dark:text-white font-semibold">AI/ML Engineer roles</strong> and
-              am open to exciting opportunities. Feel free to reach out through
-              the form or any of the channels below.
+              I&apos;m graduating in June 2026 and actively looking for{" "}
+              <strong className="text-gray-900 dark:text-white font-semibold">
+                AI/ML roles
+              </strong>
+              . If you&apos;re building something in the agentic AI space — or
+              if you just want to talk about why most RAG pipelines fail in
+              production — I&apos;d genuinely enjoy that conversation.
             </p>
 
             <div className="flex flex-col gap-3">

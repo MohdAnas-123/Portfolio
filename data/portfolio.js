@@ -5,9 +5,9 @@
 export const personalInfo = {
   name: "Mohd Anas",
   title: "AI Engineer",
-  tagline: "Building Intelligent Systems That Solve Real Problems",
+  tagline: "AI Engineer",
   description:
-    "Final-year B.Tech student specializing in scalable ML models, autonomous AI agents, and robust data pipelines. I go beyond standard chat wrappers — engineering deterministic, self-correcting systems for real-world impact.",
+    "I'm Anas. I build AI agents that actually work — not demos, not wrappers. My Financial Analyst agent has a Critic that catches its own hallucinations before they reach you.",
   email: "anasma765@gmail.com",
   linkedin: "https://www.linkedin.com/in/mohd-anas-919275251/",
   github: "https://github.com/MohdAnas-123",
@@ -17,25 +17,16 @@ export const personalInfo = {
   availableForWork: true,
 };
 
-export const stats = [
-  { number: "5+", label: "Projects Built" },
-  { number: "3+", label: "AI Agents" },
-  { number: "2026", label: "Graduating" },
+export const infoBar = [
+  { label: "Status", value: "B.Tech CS · KIET Ghaziabad" },
+  { label: "Focus", value: "Agentic AI · LangGraph · RAG" },
+  { label: "Available", value: "Immediately" },
 ];
 
 export const aboutText = [
-  "I am an aspiring AI Engineer with a deep passion for building systems that go far beyond basic LLM wrappers. My work focuses on engineering **deterministic, self-correcting AI agents** that can autonomously reason, validate data, and produce reliable outputs.",
-  "From designing **multi-agent financial analysis systems** with LangGraph to building **AI-powered feedback platforms** using BERT and GPT, I thrive at the intersection of machine learning research and production engineering.",
-  "I'm currently in my final year of B.Tech, actively seeking **AI/ML Engineer roles** where I can contribute to building the next generation of intelligent, production-grade AI systems.",
-];
-
-export const aboutHighlights = [
-  { icon: "🤖", text: "Autonomous AI Agents" },
-  { icon: "📊", text: "RAG Pipelines" },
-  { icon: "🧠", text: "Multi-Agent Systems" },
-  { icon: "⚡", text: "Production ML" },
-  { icon: "🔍", text: "NLP & Transformers" },
-  { icon: "🛠️", text: "Full-Stack AI Apps" },
+  "I got into AI agents after spending a week trying to get a vanilla GPT-4 chatbot to give consistent financial answers — it couldn't. Same question, different numbers every time. That frustration turned into a 5-agent LangGraph system with a Critic that audits every output before it reaches the user.",
+  "That's the kind of problem I find interesting: not **\"can AI do this?\"** but **\"can it do this reliably, every time, without making things up?\"** Most of my work lives in that gap between a cool demo and something you'd actually trust with real data.",
+  "I'm graduating from KIET Group of Institutions (B.Tech CS) and actively looking for **AI/ML Engineer roles** where I can build the kind of agents that don't need a human babysitter.",
 ];
 
 export const skillCategories = [
@@ -92,6 +83,8 @@ export const featuredProjects = [
     id: "finance-agent",
     number: "01",
     title: "Autonomous AI Financial Analyst",
+    problem:
+      "Getting a large language model to analyze SEC filings reliably — without hallucinating numbers — is genuinely unsolved for most teams.",
     description:
       "An enterprise-grade, agentic AI system that autonomously analyzes company earnings reports, retrieves live market data, and generates structured financial insights. Utilizes a deterministic LangGraph state machine with dynamic tool routing, a Critic Agent for hallucination auditing, and a dedicated math engine for DCF Intrinsic Value and CAGR calculations.",
     tech: [
@@ -115,8 +108,10 @@ export const featuredProjects = [
     id: "feedback-backend",
     number: "02",
     title: "CritiqueConnect — AI Feedback Platform",
+    problem:
+      "Peer feedback on creative work is either too vague to act on or too harsh to hear. Most platforms just dump raw comments — nobody synthesizes them.",
     description:
-      "A production backend for enhancing creative feedback using AI. Pre-trained BERT scores tone and actionability of peer critiques, GPT refines raw feedback into actionable insights, and a synthesizer aggregates multiple critiques into concise, structured summaries.",
+      "A production backend for enhancing creative feedback using AI. Pre-trained BERT scores tone and actionability of peer critiques, GPT refines raw feedback into actionable insights, and a synthesizer aggregates multiple critiques into concise, structured summaries. Published at IEEE ICECA 2025.",
     tech: ["FastAPI", "BERT", "GPT", "SQLite", "Docker", "GitHub Actions"],
     github: "https://github.com/MohdAnas-123/feedback-backend",
     live: null,
@@ -125,6 +120,7 @@ export const featuredProjects = [
       "Tone scoring (constructive vs. harsh) and actionability scoring (specific vs. generic)",
       "RESTful API with full CRUD operations for works and critiques",
       "Dockerized with CI/CD via GitHub Actions",
+      "Published: IEEE ICECA 2025 — \"Augmenting Human Creativity through AI-Driven Semantic Analysis\"",
     ],
   },
 ];
@@ -136,6 +132,8 @@ export const allProjects = [
     id: "medical-chatbot",
     number: "03",
     title: "AI Medical Assistant Chatbot",
+    problem:
+      "Medical chatbots that hallucinate drug interactions or dosage information aren't just unhelpful — they're dangerous. Grounding answers in verified data is non-negotiable.",
     description:
       "An intelligent, context-aware medical chatbot built with LangChain, Flask, and Google Gemini. Uses Retrieval-Augmented Generation (RAG) to provide accurate medical information from a curated vector database, with conversational memory for follow-up questions.",
     tech: ["LangChain", "Flask", "Gemini", "Pinecone", "Python"],
@@ -151,6 +149,8 @@ export const allProjects = [
     id: "telco-churn",
     number: "04",
     title: "Telco Customer Churn Prediction",
+    problem:
+      "Telecom companies lose billions to churn they could have predicted. The signals are in the data — month-to-month contracts, fiber optic complaints — but nobody's looking.",
     description:
       "A modular machine learning system to predict customer churn for a telecom company. Compares multiple classification models with GridSearchCV hyperparameter tuning, achieving 85% accuracy and 0.82 AUC-ROC on the Kaggle Telco dataset.",
     tech: ["Python", "scikit-learn", "Pandas", "NumPy", "Matplotlib"],
@@ -169,7 +169,7 @@ export const experience = [
   {
     date: "2024 — Present",
     role: "AI/ML Developer",
-    company: "Self-Directed Projects",
+    company: "Independent AI Research & Engineering",
     details: [
       "Engineered an autonomous multi-agent financial analysis system using LangGraph with 5 specialized AI agents",
       "Built a custom Critic Agent that audits retrieved data to eliminate LLM hallucinations before report generation",
@@ -201,4 +201,7 @@ export const education = [
   },
 ];
 
-export const contactFormAction = "https://formspree.io/f/mqejlelp"; 
+export const humanLine =
+  "Final year student. Lucknow. Probably debugging something right now.";
+
+export const contactFormAction = "https://formspree.io/f/mqejlelp";

@@ -1,104 +1,75 @@
 "use client";
 import { motion } from "framer-motion";
 import { ArrowDown, ExternalLink } from "lucide-react";
-import { personalInfo, stats } from "@/data/portfolio";
+import { personalInfo, infoBar } from "@/data/portfolio";
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center relative px-6 pt-24 pb-20 overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative px-6 pt-24 pb-20"
     >
-      {/* Background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-violet-500/5 dark:bg-violet-500/8 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Floating code fragments */}
-      <motion.div
-        className="absolute top-[18%] left-[8%] text-[11px] font-mono text-violet-400/20 dark:text-violet-400/15 select-none pointer-events-none hidden md:block"
-        animate={{ y: [0, -12, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      >
-        {"{ agents: 3, rag: true }"}
-      </motion.div>
-      <motion.div
-        className="absolute top-[30%] right-[6%] text-[11px] font-mono text-blue-400/20 dark:text-blue-400/15 select-none pointer-events-none hidden md:block"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      >
-        {"model.stream(messages)"}
-      </motion.div>
-      <motion.div
-        className="absolute bottom-[22%] left-[12%] text-[11px] font-mono text-purple-400/20 dark:text-purple-400/15 select-none pointer-events-none hidden md:block"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      >
-        {"vectorStore.query(embedding)"}
-      </motion.div>
-
-      <div className="max-w-4xl w-full mx-auto text-center">
+      <div className="max-w-4xl w-full mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6 }}
         >
           {/* Badge */}
           {personalInfo.availableForWork && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-violet-500/10 text-violet-400 border border-violet-500/20 mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase text-emerald-500 border border-emerald-500/20 mb-10"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Open to Work
+              Available Now
             </motion.div>
           )}
 
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.08] mb-4 tracking-tight">
-            Hi, I&apos;m{" "}
-            <span className="bg-gradient-to-r from-violet-500 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-              {personalInfo.name}
-            </span>
+          {/* Name — raw, massive, no gradient */}
+          <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6">
+            {personalInfo.name}
           </h1>
 
-          <p className="text-xl sm:text-2xl lg:text-3xl font-medium text-gray-500 dark:text-gray-400 mb-5">
-            {personalInfo.title}
-          </p>
-
-          <p className="text-base sm:text-lg text-gray-500 dark:text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10">
+          {/* Description — human, specific */}
+          <p className="text-lg sm:text-xl text-gray-500 dark:text-gray-400 max-w-2xl leading-relaxed mb-10">
             {personalInfo.description}
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <div className="flex flex-wrap gap-4 mb-14">
             <a
               href="#projects"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold bg-violet-600 text-white hover:bg-violet-500 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/30"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg text-sm font-semibold bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
             >
               View My Work
               <ArrowDown size={16} />
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:border-violet-500 hover:text-violet-500 transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg text-sm font-semibold border border-gray-200 dark:border-white/15 text-gray-600 dark:text-gray-400 hover:border-gray-400 dark:hover:border-white/30 transition-colors"
             >
               Contact Me
               <ExternalLink size={16} />
             </a>
           </div>
 
-          {/* Stats */}
-          <div className="flex justify-center gap-10 sm:gap-16 pt-8 border-t border-gray-100 dark:border-white/5">
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <div className="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-violet-500 to-blue-400 bg-clip-text text-transparent">
-                  {stat.number}
+          {/* Info Bar — clean data table, no gradients */}
+          <div className="border-t border-gray-200 dark:border-white/10 pt-8">
+            <div className="grid grid-cols-3 gap-6 sm:gap-10">
+              {infoBar.map((item) => (
+                <div key={item.label}>
+                  <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-400 dark:text-gray-600 mb-1.5">
+                    {item.label}
+                  </div>
+                  <div className="text-sm sm:text-base font-medium text-gray-900 dark:text-gray-100">
+                    {item.value}
+                  </div>
                 </div>
-                <div className="text-[11px] text-gray-400 uppercase tracking-widest mt-1">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>

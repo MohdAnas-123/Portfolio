@@ -8,9 +8,9 @@ import AskMe from "@/components/AskMe";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata = {
-  title: "Mohd Anas — AI Engineer Portfolio",
+  title: "Mohd Anas — AI Engineer",
   description:
-    "Portfolio of Mohd Anas, an aspiring AI Engineer specializing in autonomous AI agents, multi-agent systems, RAG pipelines, and production-grade ML solutions.",
+    "I build AI agents that actually work. Multi-agent systems, RAG pipelines, and production ML — not demos, not wrappers.",
   keywords: [
     "AI Engineer",
     "Machine Learning",
@@ -22,7 +22,7 @@ export const metadata = {
   openGraph: {
     title: "Mohd Anas — AI Engineer",
     description:
-      "Building intelligent systems that solve real problems. Autonomous AI agents, RAG pipelines, and production ML.",
+      "I build AI agents that actually work. Multi-agent systems, RAG pipelines, and production ML.",
     type: "website",
   },
 };

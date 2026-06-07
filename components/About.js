@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import SectionHeader from "./SectionHeader";
-import { personalInfo, aboutText, aboutHighlights } from "@/data/portfolio";
+import { personalInfo, aboutText } from "@/data/portfolio";
 
 export default function About() {
   const ref = useRef(null);
@@ -15,7 +15,6 @@ export default function About() {
         <SectionHeader
           label="About"
           title="Who I Am"
-          subtitle="A passionate builder at the intersection of AI research and production engineering"
         />
 
         <div
@@ -41,7 +40,7 @@ export default function About() {
             </div>
           </motion.div>
 
-          {/* Text */}
+          {/* Text — story, no emoji pills */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -60,22 +59,6 @@ export default function About() {
                 }}
               />
             ))}
-
-            {/* Highlights Grid */}
-            <div className="grid grid-cols-2 gap-3 mt-6">
-              {aboutHighlights.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.3 + i * 0.05 }}
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg bg-gray-50 dark:bg-white/[0.03] border border-gray-100 dark:border-white/5 text-sm text-gray-600 dark:text-gray-400 hover:border-violet-500/30 hover:bg-violet-500/5 transition-all cursor-default"
-                >
-                  <span className="text-lg">{item.icon}</span>
-                  {item.text}
-                </motion.div>
-              ))}
-            </div>
           </motion.div>
         </div>
       </div>

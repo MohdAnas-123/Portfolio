@@ -1,7 +1,7 @@
 "use client";
 import { Mail, Heart } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./icons";
-import { personalInfo } from "@/data/portfolio";
+import { personalInfo, humanLine } from "@/data/portfolio";
 
 const poweredBy = [
   {
@@ -103,10 +103,15 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Copyright */}
-            <p className="text-xs text-gray-400 flex items-center gap-1">
-              Built with <Heart size={12} className="text-violet-400" /> by {personalInfo.name} © {new Date().getFullYear()}
-            </p>
+            {/* Human line + Copyright */}
+            <div className="text-center sm:text-right">
+              <p className="text-xs text-gray-400 dark:text-gray-600 italic mb-1">
+                {humanLine}
+              </p>
+              <p className="text-xs text-gray-400 flex items-center gap-1 justify-center sm:justify-end">
+                Built with <Heart size={12} className="text-violet-400" /> by {personalInfo.name} © {new Date().getFullYear()}
+              </p>
+            </div>
           </div>
         </div>
       </div>
