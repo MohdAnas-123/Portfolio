@@ -1,76 +1,107 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowDown, ExternalLink } from "lucide-react";
 import { personalInfo, infoBar } from "@/data/portfolio";
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center relative px-6 pt-24 pb-20"
+      className="min-h-screen flex items-center relative px-6 sm:px-10 lg:px-16 pt-24 pb-20"
     >
-      <div className="max-w-4xl w-full mx-auto">
+      <div className="max-w-7xl w-full mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
         >
-          {/* Badge */}
-          {personalInfo.availableForWork && (
+          {/* 30/70 Split — Identity + Manifesto */}
+          <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] gap-12 lg:gap-20 items-end">
+            {/* Left Column — Identity Block */}
+            <div className="lg:pb-2">
+              {/* Available badge */}
+              {personalInfo.availableForWork && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-medium tracking-wider uppercase text-[#6B8F71] border border-[#6B8F71]/20 mb-6"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#6B8F71] animate-pulse" />
+                  Available Now
+                </motion.div>
+              )}
+
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#2A2A28] dark:text-[#E8E6E1] mb-2">
+                {personalInfo.name}
+              </h2>
+              <p className="font-mono text-xs text-[#7A7A72] dark:text-[#8A8A82] tracking-wide uppercase mb-1">
+                {personalInfo.tagline}
+              </p>
+              <p className="font-mono text-xs text-[#7A7A72] dark:text-[#8A8A82]">
+                {personalInfo.location}
+              </p>
+            </div>
+
+            {/* Right Column — Differentiation Statement */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase text-emerald-500 border border-emerald-500/20 mb-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Available Now
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.1] tracking-tight text-[#1a1a1a] dark:text-[#F0EDE8]">
+                {personalInfo.description}
+              </h1>
             </motion.div>
-          )}
-
-          {/* Name — raw, massive, no gradient */}
-          <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6">
-            {personalInfo.name}
-          </h1>
-
-          {/* Description — human, specific */}
-          <p className="text-lg sm:text-xl text-gray-500 dark:text-gray-400 max-w-2xl leading-relaxed mb-10">
-            {personalInfo.description}
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-4 mb-14">
-            <a
-              href="#projects"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg text-sm font-semibold bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
-            >
-              View My Work
-              <ArrowDown size={16} />
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg text-sm font-semibold border border-gray-200 dark:border-white/15 text-gray-600 dark:text-gray-400 hover:border-gray-400 dark:hover:border-white/30 transition-colors"
-            >
-              Contact Me
-              <ExternalLink size={16} />
-            </a>
           </div>
 
-          {/* Info Bar — clean data table, no gradients */}
-          <div className="border-t border-gray-200 dark:border-white/10 pt-8">
+          {/* Info Bar — Data Table */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="mt-16 pt-8 border-t border-[#E5E3DE] dark:border-[#2A2A28]"
+          >
             <div className="grid grid-cols-3 gap-6 sm:gap-10">
               {infoBar.map((item) => (
                 <div key={item.label}>
-                  <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-400 dark:text-gray-600 mb-1.5">
+                  <div className="font-mono text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.15em] text-[#7A7A72] dark:text-[#8A8A82] mb-1.5">
                     {item.label}
                   </div>
-                  <div className="text-sm sm:text-base font-medium text-gray-900 dark:text-gray-100">
+                  <div className="text-sm sm:text-base font-medium text-[#2A2A28] dark:text-[#E8E6E1]">
                     {item.value}
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
+
+          {/* CTAs — text links, editorial style */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="mt-10 flex flex-wrap gap-8"
+          >
+            <a
+              href="#projects"
+              className="text-sm font-medium text-[#6B8F71] border-b border-[#6B8F71]/40 pb-0.5 hover:border-[#6B8F71] transition-colors"
+            >
+              View Selected Work ↓
+            </a>
+            <a
+              href="#contact"
+              className="text-sm font-medium text-[#7A7A72] dark:text-[#8A8A82] border-b border-[#7A7A72]/30 pb-0.5 hover:text-[#6B8F71] hover:border-[#6B8F71] transition-colors"
+            >
+              Get In Touch
+            </a>
+            <a
+              href={personalInfo.resumeUrl}
+              download
+              className="text-sm font-medium text-[#7A7A72] dark:text-[#8A8A82] border-b border-[#7A7A72]/30 pb-0.5 hover:text-[#6B8F71] hover:border-[#6B8F71] transition-colors"
+            >
+              Download Resume
+            </a>
+          </motion.div>
         </motion.div>
       </div>
     </section>

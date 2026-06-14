@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   AskMe Chat Widget — Premium Glassmorphic Floating Chat
+   AskMe Chat Widget — Editorial Sage Green Version
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Floating Action Button ─────────────────────────────────────── */
@@ -16,10 +16,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #7c3aed, #6366f1, #3b82f6);
+  background: #6B8F71;
   box-shadow:
-    0 4px 24px rgba(124, 58, 237, 0.4),
-    0 0 0 0 rgba(124, 58, 237, 0.3);
+    0 4px 24px rgba(107, 143, 113, 0.4),
+    0 0 0 0 rgba(107, 143, 113, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: askme-pulse 2.5s ease-in-out infinite;
 }
@@ -27,8 +27,8 @@
 .askme-fab:hover {
   transform: scale(1.08);
   box-shadow:
-    0 6px 32px rgba(124, 58, 237, 0.55),
-    0 0 0 6px rgba(124, 58, 237, 0.12);
+    0 6px 32px rgba(107, 143, 113, 0.55),
+    0 0 0 6px rgba(107, 143, 113, 0.12);
 }
 
 .askme-fab svg {
@@ -41,13 +41,13 @@
 @keyframes askme-pulse {
   0%, 100% {
     box-shadow:
-      0 4px 24px rgba(124, 58, 237, 0.4),
-      0 0 0 0 rgba(124, 58, 237, 0.3);
+      0 4px 24px rgba(107, 143, 113, 0.4),
+      0 0 0 0 rgba(107, 143, 113, 0.3);
   }
   50% {
     box-shadow:
-      0 4px 24px rgba(124, 58, 237, 0.4),
-      0 0 0 10px rgba(124, 58, 237, 0);
+      0 4px 24px rgba(107, 143, 113, 0.4),
+      0 0 0 10px rgba(107, 143, 113, 0);
   }
 }
 
@@ -61,25 +61,25 @@
   max-height: 560px;
   display: flex;
   flex-direction: column;
-  border-radius: 20px;
+  border-radius: 8px; /* Sharper borders for editorial */
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(250, 248, 245, 0.96); /* Warm cream #FAF8F5 */
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(107, 143, 113, 0.2);
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.12),
     0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-    0 0 40px rgba(124, 58, 237, 0.06);
+    0 0 40px rgba(107, 143, 113, 0.06);
 }
 
 :where(.dark) .askme-panel {
-  background: rgba(15, 15, 25, 0.88);
-  border: 1px solid rgba(124, 58, 237, 0.2);
+  background: rgba(17, 17, 16, 0.96); /* Charcoal #111110 */
+  border: 1px solid rgba(107, 143, 113, 0.25);
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 20px 60px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-    0 0 50px rgba(124, 58, 237, 0.08);
+    0 0 50px rgba(107, 143, 113, 0.08);
 }
 
 /* ── Header ─────────────────────────────────────────────────────── */
@@ -88,8 +88,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  background: #1a1a1a; /* Dark gray for header */
+  border-bottom: 2px solid #6B8F71; /* Sage green accent line */
   flex-shrink: 0;
+}
+
+:where(.dark) .askme-header {
+  background: #2A2A28; /* Lighter charcoal for contrast */
 }
 
 .askme-header-left {
@@ -101,17 +106,19 @@
 .askme-header-avatar {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px; /* Editorial square */
+  background: #6B8F71;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
+  color: white;
 }
 
 .askme-header-info h3 {
   margin: 0;
   font-size: 14px;
+  font-family: var(--font-display), serif;
   font-weight: 700;
   color: white;
   letter-spacing: -0.01em;
@@ -119,13 +126,16 @@
 
 .askme-header-info p {
   margin: 0;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 10px;
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6B8F71;
   font-weight: 500;
 }
 
 .askme-close-btn {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   cursor: pointer;
   color: white;
@@ -139,7 +149,7 @@
 }
 
 .askme-close-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .askme-close-btn svg {
@@ -168,38 +178,40 @@
 }
 
 .askme-messages::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.3);
+  background: rgba(107, 143, 113, 0.4);
   border-radius: 2px;
 }
 
 /* ── Message Bubbles ────────────────────────────────────────────── */
 .askme-msg {
   max-width: 85%;
-  padding: 10px 14px;
-  border-radius: 16px;
-  font-size: 13.5px;
-  line-height: 1.55;
+  padding: 12px 14px;
+  border-radius: 4px; /* Sharper corners */
+  font-size: 13px;
+  line-height: 1.6;
   word-wrap: break-word;
   white-space: pre-wrap;
+  font-family: var(--font-inter), sans-serif;
 }
 
 .askme-msg-user {
   align-self: flex-end;
-  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  background: #6B8F71;
   color: white;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 0;
 }
 
 .askme-msg-bot {
   align-self: flex-start;
-  background: rgba(124, 58, 237, 0.08);
-  color: #1f2937;
-  border-bottom-left-radius: 4px;
+  background: rgba(107, 143, 113, 0.1);
+  color: #2A2A28;
+  border-left: 2px solid #6B8F71;
+  border-bottom-left-radius: 0;
 }
 
 :where(.dark) .askme-msg-bot {
-  background: rgba(124, 58, 237, 0.12);
-  color: #e5e7eb;
+  background: rgba(107, 143, 113, 0.15);
+  color: #E8E6E1;
 }
 
 /* ── Typing Indicator ───────────────────────────────────────────── */
@@ -209,21 +221,22 @@
   gap: 4px;
   padding: 12px 16px;
   align-self: flex-start;
-  background: rgba(124, 58, 237, 0.08);
-  border-radius: 16px;
-  border-bottom-left-radius: 4px;
+  background: rgba(107, 143, 113, 0.1);
+  border-radius: 4px;
+  border-left: 2px solid #6B8F71;
+  border-bottom-left-radius: 0;
 }
 
 :where(.dark) .askme-typing {
-  background: rgba(124, 58, 237, 0.12);
+  background: rgba(107, 143, 113, 0.15);
 }
 
 .askme-typing-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: #7c3aed;
-  opacity: 0.5;
+  background: #6B8F71;
+  opacity: 0.6;
   animation: askme-bounce 1.4s ease-in-out infinite;
 }
 
@@ -256,12 +269,15 @@
 }
 
 .askme-chip {
-  padding: 6px 12px;
-  border-radius: 20px;
-  border: 1px solid rgba(124, 58, 237, 0.2);
-  background: rgba(124, 58, 237, 0.05);
-  color: #6d28d9;
-  font-size: 11.5px;
+  padding: 6px 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(107, 143, 113, 0.3);
+  background: rgba(107, 143, 113, 0.05);
+  color: #4A4A45;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
@@ -269,20 +285,22 @@
 }
 
 .askme-chip:hover {
-  background: rgba(124, 58, 237, 0.12);
-  border-color: rgba(124, 58, 237, 0.35);
+  background: rgba(107, 143, 113, 0.15);
+  border-color: rgba(107, 143, 113, 0.5);
+  color: #1a1a1a;
   transform: translateY(-1px);
 }
 
 :where(.dark) .askme-chip {
-  color: #a78bfa;
-  border-color: rgba(124, 58, 237, 0.25);
-  background: rgba(124, 58, 237, 0.08);
+  color: #B0AEA6;
+  border-color: rgba(107, 143, 113, 0.3);
+  background: rgba(107, 143, 113, 0.1);
 }
 
 :where(.dark) .askme-chip:hover {
-  background: rgba(124, 58, 237, 0.18);
-  border-color: rgba(124, 58, 237, 0.4);
+  background: rgba(107, 143, 113, 0.2);
+  border-color: rgba(107, 143, 113, 0.5);
+  color: #E8E6E1;
 }
 
 /* ── Input Area ─────────────────────────────────────────────────── */
@@ -291,79 +309,88 @@
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  border-top: 1px solid rgba(124, 58, 237, 0.1);
+  border-top: 1px solid rgba(107, 143, 113, 0.2);
   flex-shrink: 0;
+  background: #F2F0EB;
 }
 
 :where(.dark) .askme-input-area {
-  border-top-color: rgba(124, 58, 237, 0.15);
+  border-top-color: rgba(107, 143, 113, 0.25);
+  background: #151514;
 }
 
 .askme-input {
   flex: 1;
   padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(124, 58, 237, 0.15);
-  background: rgba(124, 58, 237, 0.03);
-  color: #1f2937;
-  font-size: 13.5px;
-  font-family: inherit;
+  border-radius: 2px;
+  border: 1px solid rgba(107, 143, 113, 0.2);
+  background: #FAF8F5;
+  color: #1a1a1a;
+  font-size: 13px;
+  font-family: var(--font-inter), sans-serif;
   outline: none;
   transition: all 0.2s;
 }
 
 .askme-input::placeholder {
-  color: #9ca3af;
+  color: #7A7A72;
+  font-style: italic;
 }
 
 .askme-input:focus {
-  border-color: rgba(124, 58, 237, 0.4);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
+  border-color: #6B8F71;
+  box-shadow: 0 0 0 2px rgba(107, 143, 113, 0.15);
 }
 
 :where(.dark) .askme-input {
-  background: rgba(124, 58, 237, 0.06);
-  border-color: rgba(124, 58, 237, 0.2);
-  color: #e5e7eb;
+  background: #111110;
+  border-color: rgba(107, 143, 113, 0.3);
+  color: #F0EDE8;
 }
 
 :where(.dark) .askme-input::placeholder {
-  color: #6b7280;
+  color: #8A8A82;
 }
 
 :where(.dark) .askme-input:focus {
-  border-color: rgba(124, 58, 237, 0.45);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  border-color: #6B8F71;
+  box-shadow: 0 0 0 2px rgba(107, 143, 113, 0.2);
 }
 
 .askme-send-btn {
   width: 38px;
   height: 38px;
-  border-radius: 10px;
+  border-radius: 2px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  background: #1a1a1a;
   color: white;
   transition: all 0.2s;
   flex-shrink: 0;
 }
 
+:where(.dark) .askme-send-btn {
+  background: #6B8F71;
+}
+
 .askme-send-btn:hover:not(:disabled) {
-  transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+  transform: translateY(-1px);
+  background: #6B8F71;
+  box-shadow: 0 4px 12px rgba(107, 143, 113, 0.2);
 }
 
 .askme-send-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 .askme-send-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 /* ── Welcome Message ────────────────────────────────────────────── */
@@ -373,30 +400,32 @@
 }
 
 .askme-welcome-emoji {
-  font-size: 32px;
-  margin-bottom: 8px;
+  font-size: 24px; /* Reduced size for editorial feel */
+  margin-bottom: 12px;
+  display: block;
 }
 
 .askme-welcome h4 {
-  margin: 0 0 4px;
-  font-size: 15px;
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-family: var(--font-display), serif;
   font-weight: 700;
-  color: #1f2937;
+  color: #1a1a1a;
 }
 
 :where(.dark) .askme-welcome h4 {
-  color: #e5e7eb;
+  color: #F0EDE8;
 }
 
 .askme-welcome p {
   margin: 0;
-  font-size: 12.5px;
-  color: #6b7280;
-  line-height: 1.5;
+  font-size: 12px;
+  color: #4A4A45;
+  line-height: 1.6;
 }
 
 :where(.dark) .askme-welcome p {
-  color: #9ca3af;
+  color: #B0AEA6;
 }
 
 /* ── Responsive ─────────────────────────────────────────────────── */

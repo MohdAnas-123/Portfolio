@@ -1,208 +1,191 @@
 "use client";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, Send, MapPin, Loader2, CheckCircle2, XCircle } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "./icons";
 import SectionHeader from "./SectionHeader";
 import { personalInfo, contactFormAction } from "@/data/portfolio";
 
 export default function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [formStatus, setFormStatus] = useState("idle"); // idle, submitting, success, error
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormStatus("submitting");
+
     const form = e.target;
-    setStatus("sending");
+    const data = new FormData(form);
 
     try {
-      const res = await fetch(contactFormAction, {
+      const response = await fetch(form.action, {
         method: "POST",
-        body: new FormData(form),
-        headers: { Accept: "application/json" },
+        body: data,
+        headers: {
+          Accept: "application/json",
+        },
       });
 
-      if (!res.ok) throw new Error("Failed to send");
-
-      setStatus("success");
-      form.reset();
-
-      // Reset to idle after 5 seconds so user can send again
-      setTimeout(() => setStatus("idle"), 5000);
-    } catch {
-      setStatus("error");
-      // Reset to idle after 4 seconds
-      setTimeout(() => setStatus("idle"), 4000);
+      if (response.ok) {
+        setFormStatus("success");
+        form.reset();
+      } else {
+        setFormStatus("error");
+      }
+    } catch (error) {
+      setFormStatus("error");
     }
   };
 
-  const contactLinks = [
-    { icon: <Mail size={18} />, label: personalInfo.email, href: `mailto:${personalInfo.email}` },
-    { icon: <LinkedinIcon size={18} />, label: "LinkedIn", href: personalInfo.linkedin },
-    { icon: <GithubIcon size={18} />, label: "GitHub", href: personalInfo.github },
-    { icon: <MapPin size={18} />, label: personalInfo.location, href: null },
-  ];
-
-  const isSending = status === "sending";
-
   return (
-    <section
-      id="contact"
-      className="py-24 px-6 bg-gray-50/50 dark:bg-[#0d0d14]"
-    >
-      <div className="max-w-6xl mx-auto">
+    <section id="contact" className="py-24 px-6 sm:px-10 lg:px-16 bg-[#F2F0EB] dark:bg-[#151514]">
+      <div className="max-w-7xl mx-auto">
         <SectionHeader
-          label="Contact"
-          title="Get In Touch"
+          label="Section 06"
+          title="Contact Form"
+          subtitle="Direct inquiries and consulting requests."
         />
 
-        <div
-          ref={ref}
-          className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto"
-        >
-          {/* Info Side */}
+        <div ref={ref} className="grid grid-cols-1 lg:grid-cols-[40%_1fr] gap-12 lg:gap-24">
+          {/* Left Column — Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-gray-500 dark:text-gray-400 mb-6 text-[15px] leading-relaxed">
-              I&apos;m graduating in June 2026 and actively looking for{" "}
-              <strong className="text-gray-900 dark:text-white font-semibold">
-                AI/ML roles
-              </strong>
-              . If you&apos;re building something in the agentic AI space — or
-              if you just want to talk about why most RAG pipelines fail in
-              production — I&apos;d genuinely enjoy that conversation.
-            </p>
+            <div className="mb-10">
+              <p className="font-display text-lg font-bold text-[#1a1a1a] dark:text-[#F0EDE8] mb-2">
+                Available for Work
+              </p>
+              <p className="text-sm text-[#4A4A45] dark:text-[#B0AEA6] leading-[1.75]">
+                Currently open for roles in AI Engineering, Applied ML, and backend architecture. If you're building systems that require deterministic guarantees rather than generic wrappers, let's talk.
+              </p>
+            </div>
 
-            <div className="flex flex-col gap-3">
-              {contactLinks.map((link, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
+            <div className="space-y-6">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#7A7A72] dark:text-[#8A8A82] mb-1">
+                  Email
+                </p>
+                <a
+                  href={`mailto:${personalInfo.email}`}
+                  className="text-sm font-medium text-[#2A2A28] dark:text-[#E8E6E1] hover:text-[#6B8F71] transition-colors"
                 >
-                  {link.href ? (
-                    <a
-                      href={link.href}
-                      target={link.href.startsWith("mailto") ? undefined : "_blank"}
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3.5 px-4 py-3 bg-white dark:bg-[#1a1a2e] border border-gray-100 dark:border-white/8 rounded-xl text-sm text-gray-600 dark:text-gray-400 hover:border-violet-500/30 hover:text-violet-400 hover:translate-x-1 transition-all"
-                    >
-                      <span className="text-gray-400">{link.icon}</span>
-                      {link.label}
-                    </a>
-                  ) : (
-                    <div className="flex items-center gap-3.5 px-4 py-3 bg-white dark:bg-[#1a1a2e] border border-gray-100 dark:border-white/8 rounded-xl text-sm text-gray-600 dark:text-gray-400">
-                      <span className="text-gray-400">{link.icon}</span>
-                      {link.label}
-                    </div>
-                  )}
-                </motion.div>
-              ))}
+                  {personalInfo.email}
+                </a>
+              </div>
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#7A7A72] dark:text-[#8A8A82] mb-1">
+                  Location
+                </p>
+                <p className="text-sm font-medium text-[#2A2A28] dark:text-[#E8E6E1]">
+                  {personalInfo.location}
+                </p>
+              </div>
             </div>
           </motion.div>
 
-          {/* Form Side */}
+          {/* Right Column — Editorial Form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
           >
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 relative">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  disabled={isSending}
-                  placeholder="Your name"
-                  className="px-4 py-3 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a2e] text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
-                />
+            {formStatus === "success" ? (
+              <div className="h-full flex flex-col justify-center items-center text-center p-8 border border-[#E5E3DE] dark:border-[#2A2A28] bg-[#FAF8F5] dark:bg-[#111110]">
+                <span className="text-4xl mb-4">✉️</span>
+                <h3 className="font-display text-xl font-bold text-[#1a1a1a] dark:text-[#F0EDE8] mb-2">
+                  Message Sent
+                </h3>
+                <p className="text-sm text-[#7A7A72] dark:text-[#8A8A82]">
+                  Thank you for reaching out. I'll reply shortly.
+                </p>
+                <button
+                  onClick={() => setFormStatus("idle")}
+                  className="mt-6 text-xs font-medium text-[#6B8F71] border-b border-[#6B8F71]/40 pb-0.5 hover:border-[#6B8F71] transition-colors"
+                >
+                  Send another message
+                </button>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  disabled={isSending}
-                  placeholder="your@email.com"
-                  className="px-4 py-3 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a2e] text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  required
-                  rows={5}
-                  disabled={isSending}
-                  placeholder="Tell me about the opportunity..."
-                  className="px-4 py-3 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a2e] text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all resize-y placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSending}
-                className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold bg-violet-600 text-white hover:bg-violet-500 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/25 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+            ) : (
+              <form
+                action={contactFormAction}
+                method="POST"
+                onSubmit={handleSubmit}
+                className="space-y-6"
               >
-                {isSending ? (
-                  <>
-                    <Loader2 size={15} className="animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send size={15} />
-                    Send Message
-                  </>
-                )}
-              </button>
-
-              {/* Feedback Toast */}
-              <AnimatePresence>
-                {status === "success" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    className="flex items-center gap-2 px-4 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm font-medium"
-                  >
-                    <CheckCircle2 size={16} />
-                    Message sent! I&apos;ll get back to you soon.
-                  </motion.div>
-                )}
-                {status === "error" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    className="flex items-center gap-2 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-sm font-medium"
-                  >
-                    <XCircle size={16} />
-                    Failed to send. Try{" "}
-                    <a
-                      href={`mailto:${personalInfo.email}`}
-                      className="underline hover:text-red-500"
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Name Input */}
+                  <div className="space-y-1.5">
+                    <label
+                      htmlFor="name"
+                      className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#7A7A72] dark:text-[#8A8A82]"
                     >
-                      emailing directly
-                    </a>
-                    .
-                  </motion.div>
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      className="w-full bg-transparent border-b border-[#E5E3DE] dark:border-[#2A2A28] py-2 text-sm text-[#1a1a1a] dark:text-[#F0EDE8] focus:border-[#6B8F71] dark:focus:border-[#6B8F71] outline-none transition-colors rounded-none px-0"
+                      placeholder="Your name"
+                    />
+                  </div>
+
+                  {/* Email Input */}
+                  <div className="space-y-1.5">
+                    <label
+                      htmlFor="email"
+                      className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#7A7A72] dark:text-[#8A8A82]"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      className="w-full bg-transparent border-b border-[#E5E3DE] dark:border-[#2A2A28] py-2 text-sm text-[#1a1a1a] dark:text-[#F0EDE8] focus:border-[#6B8F71] dark:focus:border-[#6B8F71] outline-none transition-colors rounded-none px-0"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
+                {/* Message Input */}
+                <div className="space-y-1.5">
+                  <label
+                    htmlFor="message"
+                    className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#7A7A72] dark:text-[#8A8A82]"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={4}
+                    className="w-full bg-transparent border-b border-[#E5E3DE] dark:border-[#2A2A28] py-2 text-sm text-[#1a1a1a] dark:text-[#F0EDE8] focus:border-[#6B8F71] dark:focus:border-[#6B8F71] outline-none transition-colors resize-none rounded-none px-0"
+                    placeholder="How can we work together?"
+                  />
+                </div>
+
+                {/* Error Message */}
+                {formStatus === "error" && (
+                  <p className="text-xs text-red-500 font-medium">
+                    Something went wrong. Please try again.
+                  </p>
                 )}
-              </AnimatePresence>
-            </form>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={formStatus === "submitting"}
+                  className="font-mono text-xs uppercase tracking-[0.15em] font-medium text-[#1a1a1a] dark:text-[#F0EDE8] hover:text-[#6B8F71] dark:hover:text-[#6B8F71] border-b border-[#1a1a1a] dark:border-[#F0EDE8] hover:border-[#6B8F71] dark:hover:border-[#6B8F71] pb-0.5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-block mt-4"
+                >
+                  {formStatus === "submitting" ? "Sending..." : "Send Message →"}
+                </button>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>

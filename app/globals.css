@@ -11,7 +11,23 @@
     @apply antialiased;
   }
 
-  /* Custom scrollbar */
+  /* Paper texture overlay — tactile magazine feel */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url('/noise.svg');
+    background-repeat: repeat;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  :where(.dark) body::before {
+    opacity: 0.04;
+  }
+
+  /* Custom scrollbar — sage green */
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -19,7 +35,15 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #6c5ce7;
+    background: #6B8F71;
     border-radius: 3px;
+  }
+
+  /* Typography utility classes */
+  .font-display {
+    font-family: var(--font-display), Georgia, serif;
+  }
+  .font-mono {
+    font-family: var(--font-mono), 'Courier New', monospace;
   }
 }

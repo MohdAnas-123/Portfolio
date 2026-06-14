@@ -8,14 +8,14 @@ export default function NowPage() {
   return (
     <>
       {/* Header */}
-      <section className="pt-32 pb-8 px-6">
-        <div className="max-w-2xl mx-auto">
+      <section className="pt-32 pb-8 px-6 sm:px-10 lg:px-16">
+        <div className="max-w-3xl mx-auto">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors mb-10"
+            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.15em] text-[#7A7A72] dark:text-[#8A8A82] hover:text-[#1a1a1a] dark:hover:text-[#F0EDE8] transition-colors mb-10"
           >
-            <ArrowLeft size={16} />
-            Back
+            <ArrowLeft size={14} />
+            Back to cover
           </Link>
 
           <motion.div
@@ -23,13 +23,20 @@ export default function NowPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-3xl sm:text-4xl font-black tracking-tight mb-3">
-              /now
-            </h1>
-            <p className="text-sm text-gray-400 dark:text-gray-600 mb-2">
-              Last updated: {nowData.lastUpdated}
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-500 leading-relaxed">
+            <div className="mb-8">
+              <p className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-[#6B8F71] mb-3">
+                Live Status
+              </p>
+              <h1 className="font-display text-4xl sm:text-5xl font-bold text-[#1a1a1a] dark:text-[#F0EDE8] mb-4">
+                /now
+              </h1>
+              <p className="font-mono text-xs text-[#7A7A72] dark:text-[#8A8A82] mb-6">
+                Last updated: {nowData.lastUpdated}
+              </p>
+              <div className="w-12 h-px bg-[#6B8F71]/40" />
+            </div>
+            
+            <p className="text-base text-[#4A4A45] dark:text-[#B0AEA6] leading-[1.85] italic mb-12">
               {nowData.intro}
             </p>
           </motion.div>
@@ -37,20 +44,20 @@ export default function NowPage() {
       </section>
 
       {/* Content */}
-      <section className="pb-24 px-6">
-        <div className="max-w-2xl mx-auto">
+      <section className="pb-24 px-6 sm:px-10 lg:px-16">
+        <div className="max-w-3xl mx-auto border-t border-[#E5E3DE] dark:border-[#2A2A28] pt-12">
           {nowData.sections.map((section, i) => (
             <motion.article
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 + i * 0.1 }}
-              className="mb-12 last:mb-0"
+              className="mb-14 last:mb-0"
             >
-              <h2 className="text-lg font-bold mb-4 text-gray-900 dark:text-gray-100">
+              <h2 className="font-display text-2xl font-bold mb-4 text-[#1a1a1a] dark:text-[#F0EDE8]">
                 {section.title}
               </h2>
-              <div className="text-[15px] text-gray-600 dark:text-gray-400 leading-relaxed space-y-4">
+              <div className="text-[15px] text-[#4A4A45] dark:text-[#B0AEA6] leading-[1.85] space-y-4">
                 {section.content.split("\n\n").map((paragraph, j) => (
                   <p
                     key={j}
@@ -58,7 +65,7 @@ export default function NowPage() {
                       __html: paragraph
                         .replace(
                           /\*\*(.*?)\*\*/g,
-                          '<strong class="text-gray-900 dark:text-white font-semibold">$1</strong>'
+                          '<strong class="text-[#2A2A28] dark:text-[#E8E6E1] font-semibold">$1</strong>'
                         ),
                     }}
                   />
@@ -68,14 +75,14 @@ export default function NowPage() {
           ))}
 
           {/* Divider */}
-          <div className="border-t border-gray-100 dark:border-white/5 pt-8 mt-16">
-            <p className="text-xs text-gray-400 dark:text-gray-600 italic">
+          <div className="border-t border-[#E5E3DE] dark:border-[#2A2A28] pt-8 mt-16">
+            <p className="font-mono text-[10px] text-[#7A7A72] dark:text-[#8A8A82] uppercase tracking-wide">
               This page is inspired by{" "}
               <a
                 href="https://nownownow.com/about"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:text-violet-400 transition-colors"
+                className="text-[#6B8F71] hover:underline"
               >
                 nownownow.com
               </a>

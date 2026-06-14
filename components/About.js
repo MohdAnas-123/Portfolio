@@ -10,52 +10,60 @@ export default function About() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="about" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeader
-          label="About"
-          title="Who I Am"
-        />
+    <section id="about" className="py-24 px-6 sm:px-10 lg:px-16">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeader label="Section 02" title="The Masthead" />
 
-        <div
-          ref={ref}
-          className="grid md:grid-cols-[1fr_1.3fr] gap-12 items-center"
-        >
-          {/* Image Card */}
+        {/* Asymmetric 2-column: 40% sticky identity + 60% narrative */}
+        <div ref={ref} className="grid grid-cols-1 lg:grid-cols-[35%_1fr] gap-12 lg:gap-20">
+          {/* Left — Identity Block (sticky on desktop) */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="relative"
+            className="lg:sticky lg:top-28 lg:self-start"
           >
-            <div className="bg-white dark:bg-[#1a1a2e] rounded-full border border-gray-100 dark:border-white/8 p-3 sm:p-4 relative mx-auto w-64 h-64 sm:w-80 sm:h-80 shadow-2xl shadow-violet-500/5">
-              <div className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-tr from-violet-500/30 to-blue-400/30 [mask-image:linear-gradient(white,white)] [-webkit-mask-image:-webkit-linear-gradient(white,white)] [-webkit-mask-composite:destination-out] [mask-composite:exclude]" />
+            {/* Square headshot — magazine editorial crop */}
+            <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-sm overflow-hidden mb-6">
               <Image
                 src={personalInfo.avatarUrl}
                 alt={personalInfo.name}
                 width={400}
                 height={400}
-                className="rounded-full w-full h-full object-cover"
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
               />
             </div>
+
+            <h3 className="font-display text-lg font-bold text-[#1a1a1a] dark:text-[#F0EDE8] mb-1">
+              {personalInfo.name}
+            </h3>
+            <p className="font-mono text-xs text-[#7A7A72] dark:text-[#8A8A82] uppercase tracking-wide mb-1">
+              {personalInfo.tagline}
+            </p>
+            <p className="font-mono text-xs text-[#7A7A72] dark:text-[#8A8A82]">
+              {personalInfo.location}
+            </p>
+
+            {/* Horizontal rule */}
+            <div className="mt-6 w-full h-px bg-[#E5E3DE] dark:bg-[#2A2A28]" />
           </motion.div>
 
-          {/* Text — story, no emoji pills */}
+          {/* Right — Narrative */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15 }}
+            className="max-w-xl"
           >
             {aboutText.map((text, i) => (
               <p
                 key={i}
-                className="text-gray-600 dark:text-gray-400 mb-4 text-[15px] leading-relaxed"
+                className="text-[#4A4A45] dark:text-[#B0AEA6] mb-6 text-[15px] leading-[1.85] last:mb-0"
                 dangerouslySetInnerHTML={{
-                  __html: text
-                    .replace(
-                      /\*\*(.*?)\*\*/g,
-                      '<strong class="text-gray-900 dark:text-white font-semibold">$1</strong>'
-                    ),
+                  __html: text.replace(
+                    /\*\*(.*?)\*\*/g,
+                    '<strong class="text-[#2A2A28] dark:text-[#E8E6E1] font-semibold">$1</strong>'
+                  ),
                 }}
               />
             ))}

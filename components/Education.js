@@ -9,34 +9,31 @@ export default function Education() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="education" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-24 px-6 sm:px-10 lg:px-16 bg-[#F2F0EB] dark:bg-[#151514]">
+      <div className="max-w-7xl mx-auto">
         <SectionHeader
           label="Education"
-          title="Academic Background"
-          subtitle="Foundation in Computer Science with AI/ML specialization"
+          title="Academic Record"
         />
 
-        <div
-          ref={ref}
-          className="grid sm:grid-cols-1 gap-6 max-w-2xl mx-auto"
-        >
+        <div ref={ref} className="max-w-2xl space-y-12">
           {education.map((edu, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="bg-white dark:bg-[#1a1a2e] border border-gray-100 dark:border-white/8 rounded-2xl p-7 relative overflow-hidden hover:border-violet-500/30 hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-500/5 transition-all duration-300"
+              transition={{ duration: 0.4, delay: i * 0.15 }}
             >
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 via-purple-400 to-blue-400" />
-              <span className="text-3xl mb-4 block">{edu.icon}</span>
-              <h3 className="text-lg font-bold mb-1">{edu.degree}</h3>
-              <p className="text-sm text-violet-400 font-medium mb-1">
+              <p className="font-mono text-xs text-[#6B8F71] uppercase tracking-wide mb-1">
+                {edu.year}
+              </p>
+              <h3 className="font-display text-lg font-bold text-[#1a1a1a] dark:text-[#F0EDE8] mb-0.5">
+                {edu.degree}
+              </h3>
+              <p className="text-sm text-[#7A7A72] dark:text-[#8A8A82] mb-3">
                 {edu.school}
               </p>
-              <p className="text-xs text-gray-400 mb-3">{edu.year}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+              <p className="text-sm text-[#4A4A45] dark:text-[#B0AEA6] leading-[1.75]">
                 {edu.details}
               </p>
             </motion.div>
