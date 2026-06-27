@@ -2,6 +2,48 @@
 
 ---
 
+# Real-Time Fire and Smoke Detection Using YOLO11n
+
+A high-performance computer vision pipeline optimized for edge deployment. Built on the YOLO11n architecture, the system is designed to provide real-time hazard detection in safety-critical environments where inference latency is as important as detection accuracy.
+
+## Architecture & Engineering
+
+Deploying deep learning networks in safety-critical settings requires strict balancing of accuracy against operational latency. The Ultralytics Nano variant (yolo11n) was specifically selected over heavier model variants to ensure sub-20ms inference latency and >45 FPS edge inference, avoiding edge hardware thermal throttling or dropped frames during live camera feeds.
+
+To offset the minor precision loss of the nano model, custom data augmentation anchors were engineered during training, preserving real-time frame rates while ensuring reliable detection sensitivity and balancing mean Average Precision (mAP 50-95).
+
+## Tech Stack
+
+Ultralytics YOLO11n • PyTorch • OpenCV • TensorRT
+
+## Links
+
+GitHub: https://github.com/MohdAnas-123/fire-smoke-detection-yolo11n
+
+---
+
+# Agentic Insurance Claims Intelligence Platform
+
+A production-style multi-agent insurance claims system built with LangGraph (orchestration) and CrewAI (fraud detection). A claimant submits through a React UI, and the backend runs it through 7 specialist agents — intake validation, fraud detection, damage assessment, policy compliance, settlement calculation, LLM-as-judge evaluation, and claimant notification.
+
+## Architecture & Engineering
+
+Insurance claims processing is drowning in manual review queues, but trusting an LLM to adjudicate claims without guardrails is reckless. This system enforces strict Agentic Audits using a 7-agent pipeline with a CrewAI sub-crew dedicated specifically to fraud detection (pattern analyst, anomaly detector, social validator).
+
+It implements robust Human-in-the-Loop workflows. Risky claims pause mid-pipeline via `LangGraph interrupt()` and resume from the exact checkpoint after a human reviewer's decision. Using `interrupt()` with SqliteSaver checkpointing ensures the pipeline state is durably persisted at the exact decision point, eliminating state reconstruction and race conditions compared to a simple polling queue. Furthermore, per-agent confidence gates ensure that if any agent is uncertain, the pipeline pauses and asks a human before proceeding.
+
+The system features a 3-tier ChromaDB memory system (short-term state, long-term similar claims, and episodic human overrides) and pluggable LLMs allowing runtime switching between Gemini 2.5 Flash and Groq Llama 3.3 70B.
+
+## Tech Stack
+
+LangGraph • CrewAI • Gemini • Groq • FastAPI • React • ChromaDB
+
+## Links
+
+GitHub: https://github.com/MohdAnas-123/Agentic-Insurance-Claims-Intelligence-Platform
+
+---
+
 # Autonomous AI Financial Analyst
 
 An enterprise-grade, agentic AI system that autonomously analyzes company earnings reports, retrieves live market data, and generates structured financial insights.

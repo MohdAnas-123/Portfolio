@@ -30,6 +30,7 @@ export default function About() {
                 alt={personalInfo.name}
                 width={400}
                 height={400}
+                priority
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
               />
             </div>

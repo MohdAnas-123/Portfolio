@@ -4,10 +4,10 @@
 
 export const personalInfo = {
   name: "Mohd Anas",
-  title: "AI Engineer",
-  tagline: "AI Systems Engineer",
+  title: "AI / ML ENGINEER",
+  tagline: "AI / ML Engineer",
   description:
-    "Engineering modular multi-agent architectures and optimization pipelines to transform unstructured operational chaos into production-grade AI systems.",
+    "Bridging classical deep learning and computer vision models with scalable generative architectures to build deterministic, production-grade intelligence.",
   email: "anasma765@gmail.com",
   linkedin: "https://www.linkedin.com/in/mohd-anas-919275251/",
   github: "https://github.com/MohdAnas-123",
@@ -19,11 +19,12 @@ export const personalInfo = {
 
 export const infoBar = [
   { label: "Status", value: "B.Tech CS · KIET Ghaziabad" },
-  { label: "Focus", value: "Agentic AI · LangGraph · RAG" },
+  { label: "Focus", value: "Computer Vision · Core ML · Generative AI & Agents" },
   { label: "Available", value: "Immediately" },
 ];
 
 export const aboutText = [
+  "I operate at the intersection of traditional deep learning—where optimization at the edge and model architecture matter—and generative pipelines, where state management and agentic verification prevent system failure.",
   "I got into AI agents after spending a week trying to get a vanilla GPT-4 chatbot to give consistent financial answers — it couldn't. Same question, different numbers every time. That frustration turned into a 5-agent LangGraph system with a Critic that audits every output before it reaches the user.",
   "That's the kind of problem I find interesting: not **\"can AI do this?\"** but **\"can it do this reliably, every time, without making things up?\"** Most of my work lives in that gap between a cool demo and something you'd actually trust with real data.",
   "I build modular Python architectures — not notebook prototypes. Every system I ship has explicit failure modes, deterministic tool routing, and evaluation pipelines that catch regressions before they reach production.",
@@ -87,8 +88,28 @@ export const skillCategories = [
 
 export const featuredProjects = [
   {
-    id: "insurance-claims",
+    id: "yolo-fire-smoke",
     number: "01",
+    title: "EDGE-OPTIMIZED VISION: Real-Time Fire and Smoke Detection Using YOLO11n",
+    headline: ">45 FPS Edge Inference // Real-Time Hazard Mitigation.",
+    metric: ">45 FPS",
+    metricSecondary: "Optimized TensorRT Pipeline",
+    problem:
+      "Slow processing speeds and large computational footprints in traditional object detection networks prevent dependable, real-world deployment on constrained edge hardware during critical safety emergencies.",
+    description:
+      "A high-performance computer vision pipeline optimized for edge deployment. Built on the YOLO11n architecture, the system is designed to provide real-time hazard detection in safety-critical environments where inference latency is as important as detection accuracy.",
+    tech: ["Ultralytics YOLO11n", "PyTorch", "OpenCV"],
+    github: "https://github.com/MohdAnas-123/fire-smoke-detection-yolo11n",
+    live: null,
+    highlights: [
+      "Balancing mean Average Precision (mAP 50-95) while maintaining sub-20ms inference latency to avoid edge hardware thermal throttling or dropped frames during live camera feeds."
+    ],
+    tradeoff:
+      "Why YOLO11n over heavier variants: Deploying deep learning networks in safety-critical settings requires strict balancing of accuracy against operational latency. I intentionally selected the Ultralytics Nano variant (yolo11n) over heavier model variants. While heavier models offer minor precision gains, they drop frames on lightweight compute nodes. To offset the minor precision loss of the nano model, I engineered custom data augmentation anchors during training, preserving real-time frame rates while ensuring reliable detection sensitivity."
+  },
+  {
+    id: "insurance-claims",
+    number: "02",
     title: "Agentic Insurance Claims Intelligence Platform",
     headline: "The Agentic Audit: Orchestrating a Multi-Agent CrewAI System for Automated Claim Intelligence",
     metric: "–88% Processing Latency",
@@ -121,7 +142,7 @@ export const featuredProjects = [
   },
   {
     id: "finance-agent",
-    number: "02",
+    number: "03",
     title: "Autonomous AI Financial Analyst",
     headline: "Autonomous Financial Intelligence: Self-Correcting Multi-Agent Analysis with Hallucination Auditing",
     metric: "5-Agent System",
@@ -149,30 +170,6 @@ export const featuredProjects = [
     tradeoff:
       "Why a dedicated math engine instead of letting the LLM calculate: GPT and Gemini regularly produce DCF valuations off by 30-40%. Extracting the numbers via RAG and routing them through deterministic Python math functions eliminates this entire class of errors with zero latency cost.",
   },
-  {
-    id: "feedback-backend",
-    number: "03",
-    title: "CritiqueConnect — AI Feedback Synthesis Engine",
-    headline: "Synthesizing Unstructured Feedback Loops Using Clustered BERT and Generative Pipeline Layouts",
-    metric: "Actionable Insights",
-    metricSecondary: "IEEE ICECA 2025",
-    problem:
-      "Peer feedback on creative work is either too vague to act on or too harsh to hear. Most platforms just dump raw comments — nobody synthesizes them.",
-    description:
-      "A production backend for enhancing creative feedback using AI. Pre-trained BERT scores tone and actionability of peer critiques, GPT refines raw feedback into actionable insights, and a synthesizer aggregates multiple critiques into concise, structured summaries. Published at IEEE ICECA 2025.",
-    tech: ["FastAPI", "BERT", "GPT", "SQLite", "Docker", "GitHub Actions"],
-    github: "https://github.com/MohdAnas-123/feedback-backend",
-    live: null,
-    highlights: [
-      "4-stage pipeline: Collection → BERT Analysis → GPT Enhancement → Synthesis",
-      "Tone scoring (constructive vs. harsh) and actionability scoring (specific vs. generic)",
-      "RESTful API with full CRUD operations for works and critiques",
-      "Dockerized with CI/CD via GitHub Actions",
-      "Published: IEEE ICECA 2025 — \"Augmenting Human Creativity through AI-Driven Semantic Analysis\"",
-    ],
-    tradeoff:
-      "Why BERT for analysis instead of using GPT for everything: BERT's classification head runs in milliseconds and gives deterministic tone/actionability scores. Using GPT for scoring would be 10x slower, cost money per call, and produce non-deterministic results — defeating the purpose of a reliable feedback pipeline.",
-  },
 ];
 
 // All projects (shown on /projects page) — just the featured three, tightly curated
@@ -183,6 +180,12 @@ export const allProjects = [...featuredProjects];
 // ============================================================
 
 export const projectIndex = [
+  {
+    name: "Real-Time Hazard Detection",
+    stack: "Ultralytics YOLO11n · PyTorch · OpenCV",
+    github: "https://github.com/MohdAnas-123/fire-smoke-detection-yolo11n",
+    live: null,
+  },
   {
     name: "Smart Claims Processor",
     stack: "LangGraph · CrewAI · FastAPI · React",
@@ -232,8 +235,8 @@ export const systemPrinciples = [
   },
   {
     number: "03",
-    title: "Fail explicitly, never silently.",
-    body: "Confidence gates at every pipeline stage. If an agent isn't sure, it stops and asks a human — it doesn't guess and move on. The Insurance Claims system has per-agent confidence thresholds that trigger Human-in-the-Loop review automatically.",
+    title: "Match the Architecture to the Modality.",
+    body: "Do not throw a multi-billion parameter multimodal LLM at an optimization problem where a custom-trained, lightweight convolutional or computer vision model can execute the task locally with millisecond latency and zero operational API costs.",
   },
 ];
 

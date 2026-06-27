@@ -22,6 +22,9 @@
 - Prompt Engineering
 - Embeddings
 - NLP
+- Computer Vision
+- YOLO11n
+- OpenCV
 - scikit-learn
 - TensorFlow
 - PyTorch

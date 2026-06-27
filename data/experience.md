@@ -4,7 +4,7 @@
 
 ### 2024 – Present
 
-I've been independently building production-oriented AI and machine learning systems focused on multi-agent architectures, RAG pipelines, and AI workflow orchestration.
+I've been independently building production-oriented AI and machine learning systems focused on multi-agent architectures, computer vision pipelines, RAG systems, and AI workflow orchestration.
 
 ## Key Work
 
@@ -13,10 +13,11 @@ I've been independently building production-oriented AI and machine learning sys
 - Developed Critic Agent validation systems to reduce hallucinations and improve reliability
 - Implemented LangSmith evaluation pipelines for AI workflow testing and observability
 - Designed Streamlit dashboards with interactive financial visualizations
+- Developed real-time edge-optimized computer vision pipelines using YOLO11n and PyTorch for hazard detection
 
 ## Technologies
 
-LangGraph • LangChain • FastAPI • Qdrant • Gemini • Streamlit • Plotly
+LangGraph • LangChain • FastAPI • Qdrant • Gemini • Streamlit • Plotly • PyTorch • YOLO11n • OpenCV
 
 ---
 

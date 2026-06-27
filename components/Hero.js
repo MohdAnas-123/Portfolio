@@ -75,12 +75,12 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* CTAs — text links, editorial style */}
+          {/* CTAs — text links & button, editorial style */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-10 flex flex-wrap gap-8"
+            className="mt-10 flex flex-wrap items-center gap-8"
           >
             <a
               href="#projects"
@@ -97,9 +97,14 @@ export default function Hero() {
             <a
               href={personalInfo.resumeUrl}
               download
-              className="text-sm font-medium text-[#7A7A72] dark:text-[#8A8A82] border-b border-[#7A7A72]/30 pb-0.5 hover:text-[#6B8F71] hover:border-[#6B8F71] transition-colors"
+              className="inline-flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-[0.15em] font-medium px-6 py-3 border border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-[#FAF8F5] dark:border-[#F0EDE8] dark:text-[#F0EDE8] dark:hover:bg-[#F0EDE8] dark:hover:text-[#111110] transition-colors"
             >
               Download Resume
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
             </a>
           </motion.div>
         </motion.div>
